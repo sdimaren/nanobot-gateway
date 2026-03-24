@@ -1,0 +1,43 @@
+x-common-config: &common-config
+  build:
+    context: .
+    dockerfile: Dockerfile
+  volumes:
+    - ./root:/root
+    - ./nanobot:/app/nanobot
+  env_file:
+    - .env
+  environment:
+    - PYTHONPATH=/app
+
+services:
+  nanobot-gateway-zero:
+    container_name: nanobot-gateway-zero
+    <<: *common-config
+    entrypoint: ["python3", "/root/entrypoint.py"]
+    restart: unless-stopped
+    ports:
+      - 18790:18790
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  # Optional Background Container for Skills
+  # stack-sniper:
+  #   container_name: stack-sniper
+  #   <<: *common-config
+  #   entrypoint: ["python3", "/root/workspace/skills/stack-sniper/scripts/main.py", "--loop"]
+  #   restart: unless-stopped
+
+  nanobot-cli:
+    <<: *common-config
+    profiles:
+      - cli
+    command: ["status"]
+    stdin_open: true
+    tty: true
