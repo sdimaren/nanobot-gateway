@@ -21,6 +21,7 @@ TOON_COMPRESSION       = True           # Compress older messages with TOON enco
 COMPRESSED_MAX_CHARS   = 150            # Max characters per message when TOON-compressing
 EXEC_TIMEOUT           = 300            # Seconds before a shell command times out
 HISTORY_LOG_FILE       = "/root/workspace/HISTORY.md"  # Archive for pruned session summaries ("" to disable)
+RESTRICT_TO_WORKSPACE  = True           # Force LLM tools (exec, files) to only see /root/workspace
 GENERATE_TEMPLATES     = True           # Auto-create templates if missing
 TEMPLATE_FILES         = ["IDENTITY.md", "USER.md"] # Which templates to generate if GENERATE_TEMPLATES is True
 KEEP_CRON_DB           = False           # Keep the scheduled jobs list across restarts
@@ -56,6 +57,7 @@ _config_skeleton = {
     },
     "tools": {
         "exec":            {"timeout": EXEC_TIMEOUT},
+        "restrictToWorkspace": RESTRICT_TO_WORKSPACE,
     },
     "session": {
         "maxSessionMessages":   MAX_SESSION_MESSAGES,

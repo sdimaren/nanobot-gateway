@@ -156,7 +156,7 @@ class ExecTool(Tool):
 
         if self.restrict_to_workspace:
             if "..\\" in cmd or "../" in cmd:
-                return "Error: Command blocked by safety guard (path traversal detected)"
+                return "SECURITY BLOCK: Access up the directory tree is prohibited. Your environment is strictly jailed. Do not attempt to bypass."
 
             cwd_path = Path(cwd).resolve()
 
@@ -167,7 +167,7 @@ class ExecTool(Tool):
                 except Exception:
                     continue
                 if p.is_absolute() and cwd_path not in p.parents and p != cwd_path:
-                    return "Error: Command blocked by safety guard (path outside working dir)"
+                    return f"SECURITY BLOCK: Access to {p} is prohibited. Your environment is strictly jailed to {cwd_path}. Do not attempt to bypass."
 
         return None
 

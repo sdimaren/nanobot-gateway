@@ -503,23 +503,30 @@ class TelegramChannel(BaseChannel):
                 line = line.strip()
                 if not line:
                     continue
-                rows.append(f"\U0001f4ac {line[:400]}")
+                rows.append(f"\U0001f4ad {line[:400]}")
 
+        # Tools: deduplicate identical hints to handle curiosity loops gracefully
+        added_tools = set()
         for tool in parts.get("tools") or []:
             t = (tool or "").strip()
             if not t:
                 continue
+            if t in added_tools:
+                continue
+            added_tools.add(t)
             t = " ".join(t.split())[:800]
             rows.append(f"\U0001f527 {t}")
 
         if not rows:
             return "\u23f3"
 
+        # Telegram tags take ~35 chars; stay safe under 4000
+        safe_max = max_total_chars - 50
         inner = "\n".join(rows)
-        if len(inner) > max_total_chars:
-            inner = inner[: max_total_chars - 1] + "…"
+        if len(inner) > safe_max:
+            inner = inner[: safe_max - 1] + "…"
         inner = pad_inner_for_expandable(inner)
-        return format_expandable_blockquote_html(inner, emoji=None)[:4000]
+        return format_expandable_blockquote_html(inner, emoji=None)
 
     async def _update_status(
         self, chat_id: int, msg: OutboundMessage, thread_kwargs: dict,
