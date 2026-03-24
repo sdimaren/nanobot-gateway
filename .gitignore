@@ -21,7 +21,9 @@ poetry.lock
 .pytest_cache/
 botpy.log
 nano.*.save
-root/workspace/
+root/workspace/sessions/
+root/workspace/skills/
 root/config.json
+memory.db
 root/.cache/
 docker-compose.yml
