@@ -1,4 +1,4 @@
-# Nanobot Gateway Zero
+# Nanobot Gateway
 
 A token-optimized, configurable Dockerized AI orchestrator built on the [nanobot](https://github.com/HKUDS/nanobot) framework. This repository uses a custom `entrypoint.py` to natively orchestrate the conversational engine's configuration, focusing on API token efficiency (via native [TOON Format](https://toonformat.dev) compression), secure conversation isolation, and seamless [TensorZero](https://www.tensorzero.com) integration out of the box.
 
