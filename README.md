@@ -1,6 +1,6 @@
 # Nanobot Gateway
 
-A token-optimized, configurable Dockerized AI orchestrator built on the [nanobot](https://github.com/HKUDS/nanobot) framework. This repository uses a custom `entrypoint.py` to natively orchestrate the conversational engine's configuration, focusing on API token efficiency (via native [TOON Format](https://toonformat.dev) compression), secure conversation isolation, and seamless [TensorZero](https://www.tensorzero.com) integration out of the box.
+A token-optimized, configurable Dockerized AI orchestrator built on the [nanobot](https://github.com/HKUDS/nanobot) framework. This repository uses a custom `entrypoint.py` to natively orchestrate the conversational engine's configuration, focusing on API token efficiency (via native [TOON Format](https://toonformat.dev) compression), secure conversation isolation and integration out of the box.
 
 ## Architecture
 
@@ -41,7 +41,7 @@ Upstream `nanobot` natively uses an LLM-driven `CronService` and `HeartbeatServi
 
 In this repository, we deliberately force `KEEP_CRON_DB = False` and completely delete the internal nanobot cron engine. 
 
-Instead, any background jobs or scheduled tasks are moved into cheap, token-free, independent **Docker containers** (using the `docker-compose.yml` orchestrator) running standard Python infinite loops. They quietly poll APIs in the background for $0 and only interact with the user via Telegram directly (or by handing data to the `nanobot-gateway-zero` layer via file storage) when there is actually actionable data.
+Instead, any background jobs or scheduled tasks are moved into cheap, token-free, independent **Docker containers** (using the `docker-compose.yml` orchestrator) running standard Python infinite loops. They quietly poll APIs in the background for $0 and only interact with the user via Telegram directly (or by handing data to the `nanobot-gateway` layer via file storage) when there is actually actionable data.
 
 ## Setup (Telegram Default)
 
